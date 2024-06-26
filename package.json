@@ -1,0 +1,26 @@
+{
+  "name": "designpizza",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "bootstrap-css-only": "^4.4.1",
+    "firebase": "^10.12.2",
+    "mdbvue": "^6.7.4",
+    "reset-css": "^5.0.2",
+    "vue": "^3.4.29",
+    "vue-router": "^4.0.13",
+    "vuelidate": "^0.7.7",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "sass": "^1.77.6",
+    "vite": "^5.3.1"
+  }
+}
