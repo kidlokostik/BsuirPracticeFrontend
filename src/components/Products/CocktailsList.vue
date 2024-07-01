@@ -15,20 +15,29 @@ export default {
   name: 'CocktailsList',
   data() {
     return {
-      cocktails: [
-        { id: 1, name: 'Сырный соус', image: 'image1.jpg', description: 'Описание 1', price: '500 руб' },
-        { id: 2, name: 'Кисло-сладкий соус', image: 'image2.jpg', description: 'Описание 2', price: '550 руб' },
-        { id: 3, name: 'Чесночный соус', image: 'image3.jpg', description: 'Описание 3', price: '600 руб' },
-      ]
+      cocktails: [],
     };
   },
+  created() {
+    this.fetchCocktails();
+  },
   methods: {
+    async fetchCocktails() {
+      try {
+        const response = await api.getProducts();
+        this.cocktails = response.data.filter(product => product.category_id === 2);
+      } catch (error) {
+        console.error('Error fetching cocktails:', error);
+      }
+    },
     addToCart(cocktail) {
       console.log('Добавлено в корзину:', cocktail.name);
-    }
+    },
+
   }
 };
 </script>
+
 
 <style scoped>
 .cocktail-list {

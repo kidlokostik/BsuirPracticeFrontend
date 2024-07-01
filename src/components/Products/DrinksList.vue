@@ -15,14 +15,20 @@ export default {
   name: 'DrinksList',
   data() {
     return {
-      drinks: [
-        { id: 1, name: 'Pepsi', image: 'image1.jpg', description: 'Описание 1', price: '500 руб' },
-        { id: 2, name: 'Fanta', image: 'image2.jpg', description: 'Описание 2', price: '550 руб' },
-        { id: 3, name: 'Coca-Cola', image: 'image3.jpg', description: 'Описание 3', price: '600 руб' },
-      ]
+      drinks: []
     };
   },
-  methods: {
+  created() {
+    this.fetchDrinks();
+  },
+  methods: { async fetchDrinks() {
+      try {
+        const response = await api.getProducts();
+        this.drinks = response.data.filter(product => product.category_id === 3);
+      } catch (error) {
+        console.error('Error fetching drinks:', error);
+      }
+    },
     addToCart(drink) {
       console.log('Добавлено в корзину:', drink.name);
     }
