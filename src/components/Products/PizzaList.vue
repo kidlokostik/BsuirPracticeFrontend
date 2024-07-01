@@ -4,25 +4,34 @@
       <img :src="pizza.image" alt="Pizza Image" class="pizza-image" />
       <h3>{{ pizza.name }}</h3>
       <p>{{ pizza.description }}</p>
-      <p>{{ pizza.price }}</p>
+      <p>{{ pizza.price }} руб</p>
       <button @click="addToCart(pizza)">Добавить в корзину</button>
     </div>
   </div>
 </template>
 
 <script>
+import api from '@/services/api';
+
 export default {
   name: 'PizzaList',
   data() {
     return {
-      pizzas: [
-        { id: 1, name: 'Охотничья', image: 'image1.jpg', description: 'Описание 1', price: '500 руб' },
-        { id: 2, name: 'Карбонара', image: 'image2.jpg', description: 'Описание 2', price: '550 руб' },
-        { id: 3, name: '4 сезона', image: 'image3.jpg', description: 'Описание 3', price: '600 руб' },
-      ]
+      pizzas: []
     };
   },
+  created() {
+    this.fetchPizzas();
+  },
   methods: {
+    async fetchPizzas() {
+      try {
+        const response = await api.getProducts();
+        this.pizzas = response.data.filter(product => product.category_id === 1);
+      } catch (error) {
+        console.error('Failed to fetch pizzas:', error);
+      }
+    },
     addToCart(pizza) {
       console.log('Добавлено в корзину:', pizza.name);
     }
