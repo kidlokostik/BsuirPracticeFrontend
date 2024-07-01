@@ -11,7 +11,7 @@
           <router-link to="/login">Вход</router-link>
           <router-link to="/signup">Регистрация</router-link>
         </nav>
-        <button v-if="!menuVisible" class="address-button" @click="toggleBurger">
+        <button v-if="!menuVisible" class="address-button" @click="showAddressForm = !showAddressForm">
           Адрес доставки
         </button>
       </div>
