@@ -1,87 +1,115 @@
 <template>
-<!--  <div class = "login-form">-->
-<!--    <h1>User Login</h1>-->
-<!--    <form @submit.prevent="login">-->
-<!--      <label for="username">Username:</label>-->
-<!--      <input type="text" id="username" v-model="username" required>-->
-<!--      <br>-->
-<!--      <label for="email">Email:</label>-->
-<!--      <input type="text" id="email" v-model="email" required>-->
-<!--      <br>-->
-<!--      <label for="password">Password:</label>-->
-<!--      <input type="password" id="password" v-model="password" required>-->
-<!--      <br>-->
-<!--      <button type="submit">Login</button>-->
-<!--    </form>-->
-<!--  </div>-->
-  <div v-if="startValidation && email != '' && !isValidEmail">invalid email address</div>
-  <input :class="{ valid : isValidEmail == true , inValid : isValidEmail == false}" v-model="email" type="text" placeholder="Email"> <br>
-
-  <div v-if="startValidation && password != '' && !isStrongPassword">weak password!</div>
-  <input :class="{ valid : isStrongPassword == true , inValid : isStrongPassword == false}" v-model="password" type="" placeholder="Password"> <br>
-
-  <input :class="{ valid : isPasswordConfirmed == true , inValid : isPasswordConfirmed == false}" v-model="confirmPassword" type="" placeholder="Confirm password"> <br>
-  <br>
-  <button @click="register">Register</button>
+  <div class="login-form">
+    <h1>User Login</h1>
+    <form @submit.prevent="login">
+      <label for="username">Username:</label>
+      <input type="text" id="username" v-model="username" @blur="validateUsername" :class="{ error: isUsernameError }" required>
+      <div v-if="isUsernameError" class="error-message">{{ usernameError }}</div>
+      <br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" v-model="email" @blur="validateEmail" :class="{ error: isEmailError }" required>
+      <div v-if="isEmailError" class="error-message">{{ emailError }}</div>
+      <br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" v-model="password" @blur="validatePassword" :class="{ error: isPasswordError }" required>
+      <div v-if="isPasswordError" class="error-message">{{ passwordError }}</div>
+      <br>
+      <button :disabled="!isFormValid" type="submit" @click="validateInput">Login</button>
+      <div v-if="isEmptyError" class="error-message">{{ inputError }}</div>
+    </form>
+  </div>
 </template>
 
 <script>
-import {computed} from "vue";
-
 export default {
+  name: 'Login',
   data() {
     return {
-      startValidation: false,
-      isValidEmail: false,
-      isStrongPassword: false,
-      isPasswordConfirmed: false
+      username: '',
+      email: '',
+      password: '',
+      usernameError: '',
+      emailError: '',
+      passwordError: '',
+      inputError: '',
+      isUsernameError: false,
+      isEmailError: false,
+      isPasswordError: false,
+      isEmptyError: false,
     };
   },
-  methods: {
-    register() {
-      this.startValidation = true;
-
-      if (this.isValidEmail && this.isStrongPassword && this.isPasswordConfirmed) {
-        alert("all");
-      }
+  computed: {
+    isFormValid() {
+      return this.username.trim() !== '' &&
+          this.email.trim() !== '' &&
+          this.password.trim() !== '' &&
+          !this.isUsernameError &&
+          !this.isEmailError &&
+          !this.isPasswordError &&
+          !this.isEmptyError;
     }
   },
-
-  isValidEmail = computed(() => {
-    return startValidation.value ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value) : null;
-  })
-
-  isStrongPassword = computed(() => {
-    return startValidation.value ? /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value) : null;
-  })
-
-  isPasswordConfirmed = computed(() => {
-    return startValidation.value ? password.value == confirmPassword.value : null;
-  })
-
-
+  methods: {
+    validateUsername() {
+      if (this.username.trim() === '') {
+        this.usernameError = 'Username is required';
+        this.isUsernameError = true;
+      } else {
+        this.usernameError = '';
+        this.isUsernameError = false;
+      }
+    },
+    validateEmail() {
+      const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (!emailRegex.test(this.email.trim())) {
+        this.emailError = 'Invalid email format';
+        this.isEmailError = true;
+      } else {
+        this.emailError = '';
+        this.isEmailError = false;
+      }
+    },
+    validatePassword() {
+      if (this.password.trim() === '') {
+        this.passwordError = 'Password is required';
+        this.isPasswordError = true;
+      } else if (this.password.length < 6) {
+        this.passwordError = 'Password must be at least 6 characters long';
+        this.isPasswordError = true;
+      } else {
+        this.passwordError = '';
+        this.isPasswordError = false;
+      }
+    },
+    validateInput() {
+      if (this.username.trim() === '' || this.email.trim() === '' || this.password.trim() === '') {
+        this.inputError = 'All fields are required';
+        this.isEmptyError = true;
+      } else {
+        this.inputError = '';
+        this.isEmptyError = false;
+        this.login();
+      }
+    },
+    login() {
+      console.log('Logging in with:', this.username, this.email, this.password);
+      this.$router.push({ name: 'profile' });
+    }
+  }
 };
-
-
-// export default {
-//   name: 'Login',
-//   data() {
-//     return {
-//       username: '',
-//       email: '',
-//       password: ''
-//     };
-//   },
-//   methods: {
-//     login() {
-//       console.log('Logging in with:', this.username, this.email, this.password);
-//       this.$router.push({ name: 'profile' });
-//     }
-//   }
-// };
 </script>
 
 <style scoped>
+
+error {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
 
 login-form {
   max-width: 400px;
