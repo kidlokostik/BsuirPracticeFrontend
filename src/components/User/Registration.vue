@@ -17,6 +17,8 @@
       <label for="phone">Phone Number:</label>
       <input type="tel" id="phone" v-model="phone" @blur="validatePhone" :class="{ error: isPhoneError }" required>
       <div v-if="isPhoneError" class="error-message">{{ phoneError }}</div>
+      <label for="address">Address:</label>
+      <input type="tel" id="phone" v-model="address" required>
       <button :disabled="!isFormValid" type="submit" @click="validateInput">Register</button>
       <div v-if="isEmptyError" class="error-message">{{ inputError }}</div>
     </form>
@@ -33,6 +35,7 @@ export default {
       password: '',
       confirmPassword: '',
       phone: '',
+      address: '',
       usernameError: '',
       emailError: '',
       passwordError: '',
@@ -132,7 +135,7 @@ export default {
       }
     },
     register() {
-      console.log('Registering user:', this.username, this.email, this.password, this.confirmPassword, this.phone);
+      console.log('Registering user:', this.username, this.email, this.password, this.confirmPassword, this.phone, this.address);
       this.$router.push({ name: 'profile' });
     }
   }
