@@ -100,7 +100,6 @@ export default {
 </script>
 
 <style scoped>
-
 error {
   border-color: red;
 }
@@ -111,7 +110,7 @@ error {
   margin-bottom: 5px;
 }
 
-login-form {
+.login-form {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;

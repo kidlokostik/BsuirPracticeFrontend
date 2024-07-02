@@ -18,7 +18,8 @@
       <input type="tel" id="phone" v-model="phone" @blur="validatePhone" :class="{ error: isPhoneError }" required>
       <div v-if="isPhoneError" class="error-message">{{ phoneError }}</div>
       <label for="address">Address:</label>
-      <input type="tel" id="phone" v-model="address" required>
+      <input type="text" id="address" v-model="address" @blur="validateAddress" :class="{ error: isAddressError }" required>
+      <div v-if="isAddressError" class="error-message">{{ addressError }}</div>
       <button :disabled="!isFormValid" type="submit" @click="validateInput">Register</button>
       <div v-if="isEmptyError" class="error-message">{{ inputError }}</div>
     </form>
@@ -41,12 +42,14 @@ export default {
       passwordError: '',
       confirmPasswordError: '',
       phoneError: '',
+      addressError: '',
       isUsernameError: false,
       isEmailError: false,
       isPasswordError: false,
       isConfirmPasswordError: false,
       isPhoneError: false,
       isEmptyError: false,
+      isAddressError: false,
     };
   },
   computed: {
@@ -61,6 +64,7 @@ export default {
           !this.isPasswordError &&
           !this.isConfirmPasswordError &&
           !this.isPhoneError &&
+          !this.isAddressError &&
           !this.isEmptyError;
     }
   },
@@ -122,6 +126,16 @@ export default {
       } else {
         this.phoneError = '';
         this.isPhoneError = false;
+      }
+    },
+
+    validateAddress() {
+      if (this.address.trim() === '') {
+        this.addressError = 'Address is required';
+        this.isAddressError = true;
+      } else {
+        this.addressError = '';
+        this.isAddressError = false;
       }
     },
     validateInput() {
