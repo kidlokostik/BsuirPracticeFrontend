@@ -119,7 +119,7 @@ export default {
       }
     },
     register() {
-      console.log('Registering user:', this.username, this.email, this.password, this.confirmPassword,this.phone);
+      console.log('Registering user:', this.username, this.email, this.password, this.confirmPassword, this.phone);
       this.$router.push({ name: 'profile' });
     }
   }
