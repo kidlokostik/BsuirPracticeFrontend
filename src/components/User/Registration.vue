@@ -17,7 +17,8 @@
       <label for="phone">Phone Number:</label>
       <input type="tel" id="phone" v-model="phone" @blur="validatePhone" :class="{ error: isPhoneError }" required>
       <div v-if="isPhoneError" class="error-message">{{ phoneError }}</div>
-      <button :disabled="!isFormValid" type="submit">Register</button>
+      <button :disabled="!isFormValid" type="submit" @click="validateInput">Register</button>
+      <div v-if="isEmptyError" class="error-message">{{ inputError }}</div>
     </form>
   </div>
 </template>
@@ -42,6 +43,7 @@ export default {
       isPasswordError: false,
       isConfirmPasswordError: false,
       isPhoneError: false,
+      isEmptyError: false,
     };
   },
   computed: {
@@ -50,12 +52,13 @@ export default {
           this.email.trim() !== '' &&
           this.password.trim() !== '' &&
           this.confirmPassword.trim() !== '' &&
-          this.phone.trim() === '' &&
+          this.phone.trim() !== '' &&
           !this.isUsernameError &&
           !this.isEmailError &&
           !this.isPasswordError &&
           !this.isConfirmPasswordError &&
-          !this.isPhoneError;
+          !this.isPhoneError &&
+          !this.isEmptyError;
     }
   },
   methods: {
@@ -70,7 +73,7 @@ export default {
     },
     validateEmail() {
       const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      if (this.confirmPassword.trim() === '') {
+      if (this.email.trim() === '') {
         this.emailError = 'Email required';
         this.isEmailError = true;
       } else if (!emailRegex.test(this.email.trim())) {
@@ -116,6 +119,16 @@ export default {
       } else {
         this.phoneError = '';
         this.isPhoneError = false;
+      }
+    },
+    validateInput() {
+      if (this.username.trim() === '' || this.email.trim() === '' || this.password.trim() === '') {
+        this.inputError = 'All fields are required';
+        this.isEmptyError = true;
+      } else {
+        this.inputError = '';
+        this.isEmptyError = false;
+        this.login();
       }
     },
     register() {
