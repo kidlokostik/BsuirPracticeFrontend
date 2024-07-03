@@ -10,6 +10,9 @@ import DrinksList from "./components/Products/DrinksList.vue";
 import CocktailsList from "./components/Products/CocktailsList.vue";
 import DesertsList from "./components/Products/DesertsList.vue";
 import SoucesList from "./components/Products/SoucesList.vue";
+import PromotionsList from "./components/Products/PromotionsList.vue";
+import ContactsDetails from './components/Products/ContactsDetails.vue';
+
 
 const routes = [
     { name: 'home', path: '/', component: Home, props: true },
@@ -19,8 +22,10 @@ const routes = [
     { name: 'cocktails', path: '/cocktails', component: CocktailsList },
     { name: 'desserts', path: '/desserts', component: DesertsList },
     { name: 'sauces', path: '/sauces', component: SoucesList },
+    { name: 'promotions', path: '/promotions', component: PromotionsList },
     { name: 'login', path: '/login', component: Login },
     { name: 'signup', path: '/signup', component: Registration },
+    { name: 'contacts', path: '/contacts', component: ContactsDetails },
     { name: 'profile', path: '/profile', component: Profile, beforeEnter: AuthGuard },
 ];
 

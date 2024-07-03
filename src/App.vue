@@ -6,7 +6,7 @@
       </div>
       <div class="header-content">
         <nav class="menu" v-show="menuVisible">
-          <router-link to="/actions">Акции</router-link>
+          <router-link to="/promotions">Акции</router-link>
           <router-link to="/contacts">Контакты</router-link>
           <router-link to="/login">Вход</router-link>
           <router-link to="/signup">Регистрация</router-link>

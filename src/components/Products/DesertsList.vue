@@ -16,9 +16,9 @@ export default {
   data() {
     return {
       desserts: [
-        { id: 1, name: 'Мороженое Пломбир', image: 'image1.jpg', description: 'Описание 1', price: '500 руб' },
-        { id: 2, name: 'Мороженое Соленая Карамель', image: 'image2.jpg', description: 'Описание 2', price: '550 руб' },
-        { id: 3, name: 'Мороженое Шоколадное', image: 'image3.jpg', description: 'Описание 3', price: '600 руб' },
+        { id: 1, name: 'Мороженое Пломбир', image: 'src/assets/ice_cream3.png', description: 'Описание 1', price: '500 руб' },
+        { id: 2, name: 'Мороженое Соленая Карамель', image: 'src/assets/ice_cream2.png', description: 'Описание 2', price: '550 руб' },
+        { id: 3, name: 'Мороженое Шоколадное', image: 'src/assets/ice_cream1.png', description: 'Описание 3', price: '600 руб' },
       ]
     };
   },
@@ -42,11 +42,14 @@ export default {
   border: 1px solid #ccc;
   padding: 10px;
   text-align: center;
+  position: relative;
 }
 
 .dessert-image {
-  width: 100%;
+  width: 50%;
   height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 button {
@@ -56,5 +59,6 @@ button {
   padding: 10px;
   cursor: pointer;
   margin-top: 10px;
+  width: 100%;
 }
 </style>
