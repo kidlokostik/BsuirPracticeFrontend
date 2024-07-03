@@ -11,6 +11,9 @@
           <router-link to="/login">Вход</router-link>
           <router-link to="/signup">Регистрация</router-link>
         </nav>
+        <button v-if="!menuVisible" class="address-button" @click="toggleBurger">
+          Адрес доставки
+        </button>
       </div>
       <div class="header-right">
         <button class="burger-menu" @click="toggleBurger">
@@ -113,6 +116,14 @@ export default {
 
 .logo {
   height: 70px;
+}
+
+.address-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
 .burger-menu {
